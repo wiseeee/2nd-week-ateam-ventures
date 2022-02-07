@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { OrderInfo } from './commons/constants';
-import getApi from './hook/getApi';
+import getApi from './commons/utils';
 
 function App() {
   const [state, setState] = useState<OrderInfo[]>();
