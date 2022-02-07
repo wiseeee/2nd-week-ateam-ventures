@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { OrderInfo } from '../../commons/constants';
+import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
 
 const Container: React.FC = () => {
@@ -12,6 +12,8 @@ const Container: React.FC = () => {
     }
     GetApi();
   }, []);
+
+  console.log(state);
 
   return <div></div>;
 };
