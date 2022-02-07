@@ -1,0 +1,13 @@
+.card__container {
+  border: 1px solid grey;
+  padding: 24px 16px;
+  width: 360px;
+  margin: 8px;
+}
+
+.card__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
