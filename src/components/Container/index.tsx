@@ -31,6 +31,7 @@ const Container: React.FC = () => {
   console.log(state, filteredState, filterCondition);
 
   return (
+<<<<<<< HEAD
     <div>
       <div>
         <h2>들어온 요청</h2>
@@ -72,6 +73,12 @@ const Container: React.FC = () => {
         <span>토글</span>
         <span>상담 중인 요청만 보기</span>
       </div>
+=======
+    <div className="container">
+      {state.map((e, index) => (
+        <Card cardData={e} />
+      ))}
+>>>>>>> origin/master
     </div>
   );
 };
