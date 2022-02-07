@@ -1,7 +1,9 @@
 import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
+import { Material, ProcessingMethod } from '../../commons/common';
+import Card from '../Card';
+import './style.css';
 
 const Container: React.FC = () => {
   const [state, setState] = useState<OrderInfo[]>([]);
@@ -31,7 +33,6 @@ const Container: React.FC = () => {
   console.log(state, filteredState, filterCondition);
 
   return (
-<<<<<<< HEAD
     <div>
       <div>
         <h2>들어온 요청</h2>
@@ -44,12 +45,14 @@ const Container: React.FC = () => {
           </button>
           {isMaterialActive && (
             <ul>
-              {MATERIAL.map((material, index) => (
-                <li key={index}>
-                  <input type="checkbox"></input>
-                  {material}
-                </li>
-              ))}
+              {(Object.keys(Material) as Array<keyof typeof Material>).map(
+                (material, index) => (
+                  <li key={index}>
+                    <input type="checkbox"></input>
+                    {material}
+                  </li>
+                ),
+              )}
             </ul>
           )}
         </div>
@@ -59,7 +62,11 @@ const Container: React.FC = () => {
           </button>
           {isProcessingActive && (
             <ul>
-              {PROCESSING_METHOD.map((method, index) => (
+              {(
+                Object.keys(ProcessingMethod) as Array<
+                  keyof typeof ProcessingMethod
+                >
+              ).map((method, index) => (
                 <li key={index}>
                   <input type="checkbox"></input>
                   {method}
@@ -73,12 +80,11 @@ const Container: React.FC = () => {
         <span>토글</span>
         <span>상담 중인 요청만 보기</span>
       </div>
-=======
-    <div className="container">
-      {state.map((e, index) => (
-        <Card cardData={e} />
-      ))}
->>>>>>> origin/master
+      <div className="container">
+        {state.map((e, index) => (
+          <Card key={index} cardData={e} />
+        ))}
+      </div>
     </div>
   );
 };

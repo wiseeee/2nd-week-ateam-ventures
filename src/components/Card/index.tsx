@@ -1,18 +1,20 @@
 import React from 'react';
-import { OrderInfo } from '../../commons/constants';
+import { OrderInfo } from '../../commons/type';
+import { Status } from '../../commons/common';
 import './style.css';
+
 interface Props {
   cardData: OrderInfo;
 }
 
 const Card: React.FC<Props> = ({ cardData }) => {
   return (
-    <div key={cardData.id} className="card__container">
+    <div className="card__container">
       <div className="card__header">
         <h4>{cardData.title}</h4>
         <span
           style={{
-            display: cardData.status === '대기중' ? 'none' : 'flex',
+            display: cardData.status === Status.대기중 ? 'none' : 'flex',
           }}
         >
           {cardData.status}

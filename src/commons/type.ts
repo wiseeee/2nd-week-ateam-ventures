@@ -1,11 +1,5 @@
-enum Material {
-  구리 = '구리',
-  알류미늄 = '알류미늄',
-  탄소강 = '탄소강',
-  강철 = '강철',
-  스테인리스강 = '스테인리스강',
-  합금강 = '합금강',
-}
+import { Material } from './common';
+import { Status } from './common';
 
 export interface OrderInfo {
   id: number;
@@ -14,7 +8,7 @@ export interface OrderInfo {
   due: string;
   amount: number;
   method: ('밀링' | '선반')[];
-  status: '대기중' | '상담중';
+  status: Status;
   material: Material;
   count?: number;
   docs?: number;
