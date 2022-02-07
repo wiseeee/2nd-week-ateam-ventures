@@ -3,6 +3,8 @@ export enum ProcessingMethod {
   선반 = '선반',
 }
 
+export const PROCESSING_METHOD = Object.keys(ProcessingMethod);
+
 export enum Material {
   구리 = '구리',
   알류미늄 = '알류미늄',
@@ -11,6 +13,8 @@ export enum Material {
   스테인리스강 = '스테인리스강',
   합금강 = '합금강',
 }
+
+export const MATERIAL = Object.keys(Material);
 
 export enum Status {
   대기중 = '대기중',
