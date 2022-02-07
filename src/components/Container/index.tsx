@@ -1,13 +1,13 @@
 import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
+import { MATERIAL, PROCESSING_METHOD, Material } from '../../commons/common';
 import Card from '../Card';
 import './style.css';
 
 const Container: React.FC = () => {
-  const [state, setState] = useState<OrderInfo[]>([]);
-  // const [filteredState, setFilteredState] = useState<OrderInfo[]>([]);
+  const [orders, setOrders] = useState<OrderInfo[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<OrderInfo[]>([]);
   const [materialChecked, setMaterialChecked] = useState(
     new Array(MATERIAL.length).fill(false),
   );
@@ -36,7 +36,6 @@ const Container: React.FC = () => {
       const updatedChecked = materialChecked.map((item, index) =>
         index === position ? !item : item,
       );
-
       console.log(updatedChecked);
       setMaterialChecked(updatedChecked);
     } else {
@@ -50,10 +49,19 @@ const Container: React.FC = () => {
   };
 
   useEffect(() => {
+    orders.forEach((order, index) => {
+      const arr = Object.keys(order.material);
+      arr.forEach((mat) => {
+        console.log(mat);
+      });
+    });
+  }, [materialChecked, processingMethodChecked]);
+
+  useEffect(() => {
     async function GetApi() {
       const data = await getApi('https://sixted-mock-server.herokuapp.com/');
-      setState(data);
-      // setFilteredState(data);
+      setOrders(data);
+      setFilteredOrders(data);
       console.log(materialChecked, processingMethodChecked);
     }
     GetApi();
@@ -115,7 +123,7 @@ const Container: React.FC = () => {
         <span>상담 중인 요청만 보기</span>
       </div>
       <div className="container">
-        {state.map((e, index) => (
+        {filteredOrders.map((e, index) => (
           <Card key={index} cardData={e} />
         ))}
       </div>
