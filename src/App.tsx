@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
-import { OrderInfo } from './commons/constants';
-import getApi from './commons/utils';
+import Header from './components/Header';
+import Container from './components/Container';
 
-function App() {
-  const [state, setState] = useState<OrderInfo[]>();
-
-  useEffect(() => {
-    async function GetApi() {
-      const data = await getApi('https://sixted-mock-server.herokuapp.com/');
-      setState(data);
-    }
-    GetApi();
-  }, []);
-
-  useEffect(() => {
-    console.log(state);
-  }, [state]);
-
-  return <div className="App">hello world</div>;
-}
+const App: React.FC = () => {
+  return (
+    <>
+      <Header />
+      <Container />
+    </>
+  );
+};
 
 export default App;
