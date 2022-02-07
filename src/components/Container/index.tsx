@@ -1,7 +1,7 @@
 import React, { useState, useEffect, MouseEventHandler } from 'react';
 import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD, Material } from '../../commons/common';
+import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
 import Card from '../Card';
 import './style.css';
 
@@ -33,40 +33,70 @@ const Container: React.FC = () => {
     const target = e.target.name;
 
     if (MATERIAL.includes(target)) {
-      const updatedChecked = materialChecked.map((item, index) =>
-        index === position ? !item : item,
+      const updatedChecked = materialChecked.map(
+        (item: boolean, index: number) => (index === position ? !item : item),
       );
-      console.log(updatedChecked);
       setMaterialChecked(updatedChecked);
     } else {
-      const updatedChecked = processingMethodChecked.map((item, index) =>
-        index === position ? !item : item,
+      const updatedChecked = processingMethodChecked.map(
+        (item: boolean, index: number) => (index === position ? !item : item),
       );
-
-      console.log(updatedChecked);
       setProcessingMethodChecked(updatedChecked);
     }
   };
 
   useEffect(() => {
-    orders.forEach((order, index) => {
-      const arr = Object.keys(order.material);
-      arr.forEach((mat) => {
-        console.log(mat);
-      });
+    let materialCondition: string[] = [];
+    let methodCondition: string[] = [];
+    let tempFilterdOrders1: OrderInfo[] = [];
+    let tempFilterdOrders2: OrderInfo[] = [];
+
+    materialChecked.forEach((material: boolean, index: number) => {
+      if (material) {
+        materialCondition.push(MATERIAL[index]);
+      }
     });
+    if (materialCondition.length === 0) {
+      tempFilterdOrders1 = orders;
+    } else {
+      orders.forEach((order: OrderInfo, index: number) => {
+        const material = order.material;
+        const found = material.some((r) => materialCondition.includes(r));
+        if (found) {
+          tempFilterdOrders1.push(order);
+        }
+      });
+    }
+
+    processingMethodChecked.forEach((material: boolean, index: number) => {
+      if (material) {
+        methodCondition.push(PROCESSING_METHOD[index]);
+      }
+    });
+    if (methodCondition.length === 0) {
+      tempFilterdOrders2 = tempFilterdOrders1;
+    } else {
+      console.log(tempFilterdOrders1);
+      tempFilterdOrders1.forEach((order: OrderInfo, index: number) => {
+        const method = order.method;
+        const found = method.some((r) => methodCondition.includes(r));
+        if (found) {
+          tempFilterdOrders2.push(order);
+        }
+      });
+    }
+    setFilteredOrders(tempFilterdOrders2);
   }, [materialChecked, processingMethodChecked]);
 
+  console.log(filteredOrders);
   useEffect(() => {
     async function GetApi() {
       const data = await getApi('https://sixted-mock-server.herokuapp.com/');
       setOrders(data);
       setFilteredOrders(data);
-      console.log(materialChecked, processingMethodChecked);
     }
     GetApi();
   }, []);
-  // console.log(state, filteredState, filterCondition);
 
   return (
     <div>

@@ -1,6 +1,8 @@
 import { Material } from './common';
 import { Status } from './common';
 
+export type MaterialType = keyof typeof Material;
+
 export interface OrderInfo {
   id: number;
   title: string;
@@ -9,7 +11,7 @@ export interface OrderInfo {
   amount: number;
   method: ('밀링' | '선반')[];
   status: Status;
-  material: Material;
+  material: MaterialType[];
   count?: number;
   docs?: number;
 }
