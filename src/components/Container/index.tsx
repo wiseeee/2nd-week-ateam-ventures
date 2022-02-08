@@ -25,6 +25,9 @@ import {
   ResetButton,
   ContentTitleWrap,
   NoDataWrap,
+  Label,
+  Check,
+  FilterSpan,
 } from '../../style/style';
 
 const URL = 'https://sixted-mock-server.herokuapp.com/';
@@ -161,15 +164,25 @@ const Container: React.FC = () => {
               <FilterListWrap>
                 {PROCESSING_METHOD.map((method, index) => (
                   <FilterList key={index}>
-                    <input
-                      type="checkbox"
-                      id={method}
-                      name={method}
-                      value={method}
-                      checked={processingMethodChecked[index]}
-                      onChange={(e) => handleOnChange(index, e)}
-                    ></input>
-                    <label htmlFor={method}>{method}</label>
+                    <Label style={{ alignItems: 'center', display: 'flex' }}>
+                      <Check
+                        type="checkbox"
+                        id={method}
+                        name={method}
+                        value={method}
+                        checked={processingMethodChecked[index]}
+                        onChange={(e) => handleOnChange(index, e)}
+                        style={{ zoom: 1.5 }}
+                      />
+                      <FilterSpan
+                        style={{
+                          alignItems: 'center',
+                          display: 'flex',
+                        }}
+                      >
+                        {method}
+                      </FilterSpan>
+                    </Label>
                   </FilterList>
                 ))}
               </FilterListWrap>
@@ -188,15 +201,17 @@ const Container: React.FC = () => {
               <FilterListWrap>
                 {MATERIAL.map((material, index) => (
                   <FilterList key={index}>
-                    <input
-                      type="checkbox"
-                      id={material}
-                      name={material}
-                      value={material}
-                      checked={materialChecked[index]}
-                      onChange={(e) => handleOnChange(index, e)}
-                    ></input>
-                    <label htmlFor={material}>{material}</label>
+                    <Label>
+                      <Check
+                        type="checkbox"
+                        id={material}
+                        name={material}
+                        value={material}
+                        checked={materialChecked[index]}
+                        onChange={(e) => handleOnChange(index, e)}
+                      />
+                      <FilterSpan>{material}</FilterSpan>
+                    </Label>
                   </FilterList>
                 ))}
               </FilterListWrap>
@@ -204,7 +219,6 @@ const Container: React.FC = () => {
           </FilterWrap>
           {(methodLength !== 0 || materialLength !== 0) && (
             <ResetButton onClick={resetFilter}>
-              {' '}
               <img src={reset} alt="reset" />
               필터링 리셋
             </ResetButton>

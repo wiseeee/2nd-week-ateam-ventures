@@ -184,8 +184,7 @@ export const FilterButton = styled.button`
   border: 1px solid #939fa5;
   box-sizing: border-box;
   border-radius: 4px;
-  padding: 4px 12px;
-  padding-right: 30px;
+  padding: 6px 35px 6px 8px;
   margin-right: 8px;
   position: relative;
   background: ${(props: Props) => (props.click ? '#2196f3' : '#fff')};
@@ -194,8 +193,8 @@ export const FilterButton = styled.button`
   &::after {
     content: '';
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 13.5px;
+    right: 19px;
     display: block;
     width: 0;
     height: 0;
@@ -223,15 +222,29 @@ export const FilterListWrap = styled.ul`
   border: 1px solid #939fa5;
   box-sizing: border-box;
   border-radius: 4px;
-  padding: 17px 38px 17px 12px;
+  padding: 12px 38px 12px 12px;
   margin: 0;
 `;
 export const FilterList = styled.li`
   width: fit-content;
   white-space: nowrap;
   input {
-    margin-right: 10px;
+    margin: 4px 10px 4px 0;
   }
+`;
+
+export const Label = styled.label`
+  align-items: center;
+  display: flex;
+`;
+
+export const Check = styled.input`
+  zoom: 1.5;
+`;
+
+export const FilterSpan = styled.span`
+  display: flex;
+  align-items: center;
 `;
 
 export const CardContain = styled.div`
