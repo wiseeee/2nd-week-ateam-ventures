@@ -16,7 +16,6 @@ const Header: React.FC = () => {
 
   const showMenu = () => {
     setMenuOpen(!menuOpen);
-    console.log(Boolean(menuOpen));
   };
 
   return (

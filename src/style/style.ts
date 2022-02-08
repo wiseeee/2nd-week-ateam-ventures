@@ -154,9 +154,13 @@ export const Wrapper = styled.div`
   max-width: 1130px;
   padding-top: 40px;
   margin: 0 auto;
+  color: #323d45;
   @media ${(props) => props.theme.mobile} {
     margin: 0 20px;
     padding-top: 24px;
+  }
+  @media ${(props) => props.theme.laptop} {
+    margin: 0 20px;
   }
 `;
 export const ContentTitleWrap = styled.div`
@@ -184,6 +188,8 @@ export const FilterButton = styled.button`
   padding-right: 30px;
   margin-right: 8px;
   position: relative;
+  background: ${(props: Props) => (props.click ? '#2196f3' : '#fff')};
+  color: ${(props: Props) => (props.click ? '#fff' : '#323D45')};
   cursor: pointer;
   &::after {
     content: '';
@@ -196,7 +202,12 @@ export const FilterButton = styled.button`
     border-style: solid;
     border-width: 5px 5px 0 5px;
     border-color: #939fa5 transparent transparent transparent;
-  }
+    border-color: ${(props: Props) =>
+      props.click
+        ? '#fff transparent transparent transparent'
+        : '#939fa5 transparent transparent transparent'};
+  
+    }
   &: hover {
     border: 1px solid #2196f3;
 `;
@@ -225,7 +236,7 @@ export const FilterList = styled.li`
 
 export const CardContain = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
@@ -234,9 +245,16 @@ export const CardContain = styled.div`
   @media ${(props) => props.theme.mobile} {
     flex-direction: row;
   }
+  @media ${(props) => props.theme.laptop} {
+    justify-content: center;
+  }
 `;
 export const CheckBoxWrapper = styled.div`
   position: relative;
+  span {
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 export const CheckBoxLabel = styled.label`
   position: absolute;
@@ -297,6 +315,7 @@ export const CardWrap = styled.div`
   box-sizing: border-box;
   padding: 24px 16px;
   width: 360px;
+  color: #323d45;
   cursor: pointer;
   &: hover {
     background-color: #ffffff;
@@ -374,4 +393,14 @@ export const BorderButton = styled(Button)`
   background-color: #fff;
   color: #2196f3;
   margin-left: 8px;
+`;
+
+export const NoDataWrap = styled.div`
+  text-align: center;
+  border: 1px solid #c2c2c2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: #939fa5;
+  width: 100%;
+  padding: 40px 0;
 `;

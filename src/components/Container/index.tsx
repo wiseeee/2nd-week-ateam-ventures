@@ -19,6 +19,7 @@ import {
   FilterWrap,
   ResetButton,
   ContentTitleWrap,
+  NoDataWrap,
 } from '../../style/style';
 
 const Container: React.FC = () => {
@@ -158,10 +159,7 @@ const Container: React.FC = () => {
             <FilterButton
               name="processingMethod"
               onClick={onClick}
-              style={{
-                backgroundColor: methodLength !== 0 ? '#2196f3' : '#fff',
-                color: methodLength !== 0 ? '#fff' : '#323D45',
-              }}
+              click={methodLength !== 0}
             >
               가공방식
               {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
@@ -188,10 +186,7 @@ const Container: React.FC = () => {
             <FilterButton
               name="material"
               onClick={onClick}
-              style={{
-                backgroundColor: materialLength !== 0 ? '#2196f3' : '#fff',
-                color: materialLength !== 0 ? '#fff' : '#323D45',
-              }}
+              click={materialLength !== 0}
             >
               재료
               {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
@@ -235,7 +230,7 @@ const Container: React.FC = () => {
       </SpaceBetweenMo>
       <CardContain>
         {filteredOrders.length === 0 ? (
-          <div>조건에 맞는 견적 요청이 없습니다.</div>
+          <NoDataWrap>조건에 맞는 견적 요청이 없습니다.</NoDataWrap>
         ) : (
           filteredOrders.map((e, index) => <Card key={index} cardData={e} />)
         )}

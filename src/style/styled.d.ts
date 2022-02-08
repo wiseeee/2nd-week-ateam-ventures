@@ -6,5 +6,6 @@ declare module 'styled-components' {
   export interface DefaultTheme {
     mobile: string;
     laptop: string;
+    desktop: string;
   }
 }

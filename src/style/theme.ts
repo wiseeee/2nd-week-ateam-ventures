@@ -7,7 +7,8 @@ const size = {
 
 const theme: DefaultTheme = {
   mobile: `(max-width: ${size.mobile})`,
-  laptop: `(min-width: ${size.mobile})`,
+  laptop: `(max-width: ${size.laptop})`,
+  desktop: `(min-width: ${size.laptop})`,
 };
 
 export default theme;
