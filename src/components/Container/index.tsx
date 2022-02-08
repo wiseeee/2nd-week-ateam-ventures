@@ -4,7 +4,7 @@ import { OrderInfo, Category } from '../../commons/type';
 import getApi from '../../commons/utils';
 import { MATERIAL, PROCESSING_METHOD, Status } from '../../commons/common';
 import Card from '../Card';
-import './style.css';
+import { CardContain } from '../../style/style';
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
@@ -190,13 +190,13 @@ const Container: React.FC = () => {
         <input type="checkbox" checked={toggle} onChange={onHandleToggle} />
         <span>상담 중인 요청만 보기</span>
       </div>
-      <div className="container">
+      <CardContain>
         {filteredOrders.length === 0 ? (
           <div>조건에 맞는 견적 요청이 없습니다.</div>
         ) : (
           filteredOrders.map((e, index) => <Card key={index} cardData={e} />)
         )}
-      </div>
+      </CardContain>
     </div>
   );
 };
