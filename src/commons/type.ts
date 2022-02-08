@@ -1,6 +1,7 @@
-import { Material, ProcessingMethod, Status } from './common';
+import { Material, Method, Status } from './common';
 
 export type MaterialType = keyof typeof Material;
+export type MethodType = keyof typeof Method;
 
 export type MethodType = keyof typeof ProcessingMethod;
 

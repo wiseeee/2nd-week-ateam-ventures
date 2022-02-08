@@ -20,3 +20,8 @@ export enum Status {
   대기중 = '대기중',
   상담중 = '상담중',
 }
+
+export enum Method {
+  밀링 = '밀링',
+  선반 = '선반',
+}
