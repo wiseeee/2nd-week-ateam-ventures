@@ -4,7 +4,18 @@ import { OrderInfo, Category } from '../../commons/type';
 import getApi from '../../commons/utils';
 import { MATERIAL, PROCESSING_METHOD, Status } from '../../commons/common';
 import Card from '../Card';
-import { CardContain } from '../../style/style';
+import {
+  Wrapper,
+  CardContain,
+  CheckBox,
+  CheckBoxLabel,
+  CheckBoxWrapper,
+  SpaceBetween,
+  FilterButton,
+  FilterList,
+  FilterListWrap,
+  FilterWrap,
+} from '../../style/style';
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
@@ -132,64 +143,88 @@ const Container: React.FC = () => {
   const methodLength: number = processingMethodChecked.filter(Boolean).length;
 
   return (
-    <div>
+    <Wrapper>
       <div>
         <h2>들어온 요청</h2>
         <span>파트너님에게 딱 맞는 요청서를 찾아보세요.</span>
       </div>
-      <div>
-        <div>
-          <button name="material" onClick={onClick}>
-            재료
-            {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
-          </button>
-          {isMaterialActive && (
-            <ul>
-              {MATERIAL.map((material, index) => (
-                <li key={index}>
-                  <input
-                    type="checkbox"
-                    name={material}
-                    value={material}
-                    checked={materialChecked[index]}
-                    onChange={(e) => handleOnChange(index, e)}
-                  ></input>
-                  {material}
-                </li>
-              ))}
-            </ul>
+      <SpaceBetween>
+        <SpaceBetween>
+          <FilterWrap>
+            <FilterButton
+              name="processingMethod"
+              onClick={onClick}
+              style={{
+                backgroundColor: methodLength !== 0 ? '#2196f3' : '#fff',
+                color: methodLength !== 0 ? '#fff' : '#323D45',
+              }}
+            >
+              가공방식
+              {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
+            </FilterButton>
+            {isProcessingActive && (
+              <FilterListWrap>
+                {PROCESSING_METHOD.map((method, index) => (
+                  <FilterList key={index}>
+                    <input
+                      type="checkbox"
+                      id={method}
+                      name={method}
+                      value={method}
+                      checked={processingMethodChecked[index]}
+                      onChange={(e) => handleOnChange(index, e)}
+                    ></input>
+                    <label htmlFor={method}>{method}</label>
+                  </FilterList>
+                ))}
+              </FilterListWrap>
+            )}
+          </FilterWrap>
+          <FilterWrap>
+            <FilterButton
+              name="material"
+              onClick={onClick}
+              style={{
+                backgroundColor: materialLength !== 0 ? '#2196f3' : '#fff',
+                color: materialLength !== 0 ? '#fff' : '#323D45',
+              }}
+            >
+              재료
+              {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
+            </FilterButton>
+            {isMaterialActive && (
+              <FilterListWrap>
+                {MATERIAL.map((material, index) => (
+                  <FilterList key={index}>
+                    <input
+                      type="checkbox"
+                      id={material}
+                      name={material}
+                      value={material}
+                      checked={materialChecked[index]}
+                      onChange={(e) => handleOnChange(index, e)}
+                    ></input>
+                    <label htmlFor={material}>{material}</label>
+                  </FilterList>
+                ))}
+              </FilterListWrap>
+            )}
+          </FilterWrap>
+          {(methodLength !== 0 || materialLength !== 0) && (
+            <button onClick={resetFilter}>필터초기화</button>
           )}
-        </div>
-        <div>
-          <button name="processingMethod" onClick={onClick}>
-            가공방식
-            {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
-          </button>
-          {isProcessingActive && (
-            <ul>
-              {PROCESSING_METHOD.map((method, index) => (
-                <li key={index}>
-                  <input
-                    type="checkbox"
-                    name={method}
-                    value={method}
-                    checked={processingMethodChecked[index]}
-                    onChange={(e) => handleOnChange(index, e)}
-                  ></input>
-                  {method}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        {(methodLength !== 0 || materialLength !== 0) && (
-          <button onClick={resetFilter}>필터초기화</button>
-        )}
-      </div>
-      <div>
-        <input type="checkbox" checked={toggle} onChange={onHandleToggle} />
-        <span>상담 중인 요청만 보기</span>
-      </div>
+        </SpaceBetween>
+        <CheckBoxWrapper>
+          <CheckBox
+            type="checkbox"
+            id="status"
+            checked={toggle}
+            onChange={onHandleToggle}
+          />
+          <CheckBoxLabel htmlFor="status" />
+          <span>상담 중인 요청만 보기</span>
+        </CheckBoxWrapper>
+      </SpaceBetween>
       <CardContain>
         {filteredOrders.length === 0 ? (
           <div>조건에 맞는 견적 요청이 없습니다.</div>
@@ -197,7 +232,7 @@ const Container: React.FC = () => {
           filteredOrders.map((e, index) => <Card key={index} cardData={e} />)
         )}
       </CardContain>
-    </div>
+    </Wrapper>
   );
 };
 

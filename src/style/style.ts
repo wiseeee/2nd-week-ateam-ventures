@@ -1,14 +1,114 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  max-width: 1130px;
+  margin: 0 auto;
+  @media ${(props) => props.theme.mobile} {
+    margin: 0 20px;
+  }
+`;
+
+export const FilterWrap = styled.div`
+  position: relative;
+`;
+export const FilterButton = styled.button`
+  border: 1px solid #939fa5;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 4px 12px;
+  padding-right: 30px;
+  margin-right: 8px;
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #939fa5 transparent transparent transparent;
+  }
+  &: hover {
+    border: 1px solid #2196f3;
+`;
+
+export const FilterListWrap = styled.ul`
+  list-style: none;
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  width: fit-content;
+  background: #ffffff;
+  border: 1px solid #939fa5;
+  box-sizing: border-box;
+  border-radius: 4px;
+  padding: 17px 38px 17px 12px;
+  margin: 0;
+`;
+export const FilterList = styled.li`
+  width: fit-content;
+  white-space: nowrap;
+  input {
+    margin-right: 10px;
+  }
+`;
+
 export const CardContain = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
+  margin-top: 32px;
 
   @media ${(props) => props.theme.mobile} {
     flex-direction: row;
+  }
+`;
+export const CheckBoxWrapper = styled.div`
+  position: relative;
+`;
+export const CheckBoxLabel = styled.label`
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 42px;
+  height: 24px;
+  border-radius: 15px;
+  background: #bebebe;
+  cursor: pointer;
+  &::after {
+    content: '';
+    display: block;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    margin: 3px;
+    background: #ffffff;
+    box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
+    transition: 0.2s;
+  }
+`;
+export const CheckBox = styled.input`
+  opacity: 0;
+  z-index: 3;
+  border-radius: 15px;
+  width: 42px;
+  height: 24px;
+  &:checked + ${CheckBoxLabel} {
+    background: #670fdf;
+    &::after {
+      content: '';
+      display: block;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      margin-left: 21px;
+      transition: 0.2s;
+    }
   }
 `;
 
