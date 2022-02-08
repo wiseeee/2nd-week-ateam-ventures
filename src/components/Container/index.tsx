@@ -55,12 +55,21 @@ const Container: React.FC = () => {
     setToggle(!toggle);
   };
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget.name;
     if (target === CategoryName.재료) {
-      setIsMaterialActive(!isMaterialActive);
+      setIsMaterialActive(true);
     } else {
-      setIsProcessingActive(!isProcessingActive);
+      setIsProcessingActive(true);
+    }
+  };
+
+  const onMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.currentTarget.slot;
+    if (target === CategoryName.재료) {
+      setIsMaterialActive(false);
+    } else {
+      setIsProcessingActive(false);
     }
   };
 
@@ -135,10 +144,14 @@ const Container: React.FC = () => {
       </ContentTitleWrap>
       <SpaceBetweenMo>
         <FlexStart>
-          <FilterWrap>
+          <FilterWrap
+            className="processingMethod"
+            slot="processingMethod"
+            onMouseLeave={onMouseLeave}
+          >
             <FilterButton
               name="processingMethod"
-              onClick={onClick}
+              onMouseEnter={onMouseEnter}
               click={methodLength !== 0}
             >
               가공방식
@@ -162,10 +175,10 @@ const Container: React.FC = () => {
               </FilterListWrap>
             )}
           </FilterWrap>
-          <FilterWrap>
+          <FilterWrap slot="material" onMouseLeave={onMouseLeave}>
             <FilterButton
               name="material"
-              onClick={onClick}
+              onMouseEnter={onMouseEnter}
               click={materialLength !== 0}
             >
               재료
