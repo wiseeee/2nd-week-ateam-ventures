@@ -160,11 +160,12 @@ const Container: React.FC = () => {
               가공방식
               {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
             </FilterButton>
+            <div style={{ height: '4px' }} />
             {isProcessingActive && (
               <FilterListWrap>
                 {PROCESSING_METHOD.map((method, index) => (
                   <FilterList key={index}>
-                    <Label style={{ alignItems: 'center', display: 'flex' }}>
+                    <Label>
                       <Check
                         type="checkbox"
                         id={method}
@@ -172,16 +173,8 @@ const Container: React.FC = () => {
                         value={method}
                         checked={processingMethodChecked[index]}
                         onChange={(e) => handleOnChange(index, e)}
-                        style={{ zoom: 1.5 }}
                       />
-                      <FilterSpan
-                        style={{
-                          alignItems: 'center',
-                          display: 'flex',
-                        }}
-                      >
-                        {method}
-                      </FilterSpan>
+                      <FilterSpan>{method}</FilterSpan>
                     </Label>
                   </FilterList>
                 ))}
