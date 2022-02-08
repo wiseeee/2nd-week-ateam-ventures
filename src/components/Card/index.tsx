@@ -1,7 +1,7 @@
 import React from 'react';
 import { OrderInfo } from '../../commons/type';
 import { Status } from '../../commons/common';
-import './style.css';
+import { CardContain, CardHeader } from './style';
 
 interface Props {
   cardData: OrderInfo;
@@ -9,8 +9,8 @@ interface Props {
 
 const Card: React.FC<Props> = ({ cardData }) => {
   return (
-    <div className="card__container">
-      <div className="card__header">
+    <CardContain>
+      <CardHeader>
         <h4>{cardData.title}</h4>
         <span
           style={{
@@ -19,7 +19,7 @@ const Card: React.FC<Props> = ({ cardData }) => {
         >
           {cardData.status}
         </span>
-      </div>
+      </CardHeader>
       <p>{cardData.client}</p>
       <p>{cardData.due}</p>
       <hr />
@@ -55,7 +55,7 @@ const Card: React.FC<Props> = ({ cardData }) => {
         <button>요청내역보기</button>
         <button>채팅하기</button>
       </div>
-    </div>
+    </CardContain>
   );
 };
 
