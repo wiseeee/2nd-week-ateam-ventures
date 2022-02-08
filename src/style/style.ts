@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+interface Props {
+  click: boolean;
+}
 
 export const HeaderWrap = styled.header`
   width: 100%;
@@ -8,24 +11,17 @@ export const HeaderWrap = styled.header`
   align-items: center;
   background-color: #1565c0;
   box-sizing: border-box;
-  a {
-    text-decoration: none;
-    color: #fff;
-  }
-  a: visited {
-    text-decoration: none;
-    color: #fff;
+  button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
   }
   @media ${(props) => props.theme.mobile} {
     padding: 16px 23px;
-    a {
-      text-decoration: none;
-      color: #323d45;
-    }
-    a: visited {
-      text-decoration: none;
-      color: #323d45;
-    }
   }
 `;
 
@@ -34,7 +30,7 @@ export const Menu = styled.div`
   @media ${(props) => props.theme.mobile} {
     position: relative;
     display: block;
-    top: 3px;
+    top: -12px;
     span {
       display: block;
       width: 18px;
@@ -59,9 +55,10 @@ export const UserBackground = styled.div`
   @media ${(props) => props.theme.mobile} {
     width: 100%;
     height: 100vh;
-    background-color: ${({ click }) => (click ? '#000' : 'transparents')};
-    transform: ${({ click }) =>
-      click ? 'translateX(0)' : 'translateX(-100%)'};
+    background-color: ${(props: Props) =>
+      props.click ? '#000' : 'transparent'};
+    transform: ${(props: Props) =>
+      props.click ? 'translateX(0)' : 'translateX(-100%)'};
     opacity: 0.5;
     position: fixed;
     top: 0;
@@ -71,9 +68,6 @@ export const UserBackground = styled.div`
 export const LogoWrap = styled.div`
   img {
     height: 20px;
-  }
-  a {
-    text-decoration: none;
   }
   @media ${(props) => props.theme.mobile} {
     img {
@@ -92,10 +86,10 @@ export const UserWrap = styled.ul`
   display: flex;
   justify-content: flex-start;
   text-decoration: none;
-  img {
-    display: none;
+  li > button {
+    color: #fff;
   }
-  li > a > img {
+  li > button > img {
     display: inline-block;
     height: 15px;
     padding-right: 8px;
@@ -119,26 +113,41 @@ export const UserWrap = styled.ul`
   }
   @media ${(props) => props.theme.mobile} {
     z-index: 999;
-    width: 50%;
+    width: 70%;
     height: 100vh;
     background-color: #fff;
     opacity: 1;
     position: fixed;
     top: 0;
     left: 0;
-    transform: ${({ click }) =>
-      click ? 'translateX(0)' : 'translateX(-100%)'};
+    padding: 0;
+    transform: ${(props: Props) =>
+      props.click ? 'translateX(0)' : 'translateX(-100%)'};
     transition: 1s;
     flex-direction: column;
     img {
+      display: block;
       height: 12px;
     }
-    li {
-      text-decoration: none;
+    li > button {
       color: #323d45;
-      font-size: 14px;
-      padding: 12px 0;
     }
+    li > button > img {
+      filter: brightness(0%);
+    }
+    li {
+      font-size: 14px;
+      padding: 12px 32px;
+    }
+  }
+`;
+
+export const MoLogoWrap = styled.div`
+  display: none;
+  @media ${(props) => props.theme.mobile} {
+    display: block;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e5e5;
   }
 `;
 export const Wrapper = styled.div`
@@ -175,6 +184,7 @@ export const FilterButton = styled.button`
   padding-right: 30px;
   margin-right: 8px;
   position: relative;
+  cursor: pointer;
   &::after {
     content: '';
     position: absolute;
@@ -287,6 +297,7 @@ export const CardWrap = styled.div`
   box-sizing: border-box;
   padding: 24px 16px;
   width: 360px;
+  cursor: pointer;
   &: hover {
     background-color: #ffffff;
     border: 2px solid #2196f3;
@@ -301,7 +312,7 @@ export const CardTitle = styled.span`
   margin-bottom: 4px;
 `;
 
-export const Statusicon = styled.span`
+export const StatusIcon = styled.span`
   border: 1px solid #ffa000;
   box-sizing: border-box;
   border-radius: 12px;

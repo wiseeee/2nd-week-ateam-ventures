@@ -8,6 +8,7 @@ import {
   UserWrap,
   Menu,
   UserBackground,
+  MoLogoWrap,
 } from '../../style/style';
 
 const Header: React.FC = () => {
@@ -15,32 +16,36 @@ const Header: React.FC = () => {
 
   const showMenu = () => {
     setMenuOpen(!menuOpen);
+    console.log(Boolean(menuOpen));
   };
+
   return (
     <HeaderWrap>
       <LogoWrap>
-        <a href="#" onClick={showMenu}>
+        <button onClick={showMenu}>
           <Menu>
             <span></span>
             <span></span>
             <span></span>
           </Menu>
-        </a>
-        <a href="#">
+        </button>
+        <button>
           <img src={logo} alt="logo" />
-        </a>
+        </button>
       </LogoWrap>
       <UserBackground onClick={showMenu} click={menuOpen}></UserBackground>
       <UserWrap click={menuOpen}>
-        <img src={logoBlue} alt="logo_color" />
+        <MoLogoWrap>
+          <img src={logoBlue} alt="logo_color" />
+        </MoLogoWrap>
         <li>
-          <a href="#">
+          <button>
             <img src={user} alt="user_img" />
             A가공업체
-          </a>
+          </button>
         </li>
         <li>
-          <a href="#">로그아웃</a>
+          <button>로그아웃</button>
         </li>
       </UserWrap>
     </HeaderWrap>
