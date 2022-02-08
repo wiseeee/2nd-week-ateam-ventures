@@ -7,7 +7,20 @@ export const Wrapper = styled.div`
     margin: 0 20px;
   }
 `;
-
+export const ContentTitleWrap = styled.div`
+  margin-bottom: 32px;
+  h2 {
+    font-size: 20px;
+    line-height: 32px;
+    font-weight: 700;
+    margin: 0;
+  }
+  span {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+`;
 export const FilterWrap = styled.div`
   position: relative;
 `;
@@ -38,6 +51,7 @@ export const FilterButton = styled.button`
 export const FilterListWrap = styled.ul`
   list-style: none;
   position: absolute;
+  z-index: 4;
   top: 30px;
   left: 0px;
   width: fit-content;
@@ -73,10 +87,10 @@ export const CheckBoxWrapper = styled.div`
 `;
 export const CheckBoxLabel = styled.label`
   position: absolute;
-  top: 10px;
+  top: 15px;
   left: 0;
-  width: 42px;
-  height: 24px;
+  width: 34px;
+  height: 14px;
   border-radius: 15px;
   background: #bebebe;
   cursor: pointer;
@@ -84,9 +98,9 @@ export const CheckBoxLabel = styled.label`
     content: '';
     display: block;
     border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    margin: 3px;
+    width: 20px;
+    height: 20px;
+    margin: -5px;
     background: #ffffff;
     box-shadow: 1px 3px 3px 1px rgba(0, 0, 0, 0.2);
     transition: 0.2s;
@@ -99,16 +113,28 @@ export const CheckBox = styled.input`
   width: 42px;
   height: 24px;
   &:checked + ${CheckBoxLabel} {
-    background: #670fdf;
+    background: #bbdefb;
     &::after {
       content: '';
       display: block;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       margin-left: 21px;
       transition: 0.2s;
+      background: #2196f3;
     }
+  }
+`;
+
+export const ResetButton = styled.button`
+  background-color: transparent;
+  border: 0px;
+  color: #2196f3;
+  font-size: 12px;
+  img {
+    width: 13px;
+    padding-right: 12px;
   }
 `;
 
@@ -144,6 +170,15 @@ export const Statusicon = styled.span`
 export const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+export const FlexStart = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+export const SpaceBetweenMo = styled(SpaceBetween)`
+  @media ${(props) => props.theme.mobile} {
+    flex-direction: column;
+  }
 `;
 export const CardContent = styled.p`
   font-size: 14px;

@@ -4,17 +4,21 @@ import { OrderInfo, Category } from '../../commons/type';
 import getApi from '../../commons/utils';
 import { MATERIAL, PROCESSING_METHOD, Status } from '../../commons/common';
 import Card from '../Card';
+import reset from './img/reset.png';
 import {
   Wrapper,
   CardContain,
   CheckBox,
   CheckBoxLabel,
   CheckBoxWrapper,
-  SpaceBetween,
+  FlexStart,
+  SpaceBetweenMo,
   FilterButton,
   FilterList,
   FilterListWrap,
   FilterWrap,
+  ResetButton,
+  ContentTitleWrap,
 } from '../../style/style';
 
 const Container: React.FC = () => {
@@ -144,12 +148,12 @@ const Container: React.FC = () => {
 
   return (
     <Wrapper>
-      <div>
+      <ContentTitleWrap>
         <h2>들어온 요청</h2>
         <span>파트너님에게 딱 맞는 요청서를 찾아보세요.</span>
-      </div>
-      <SpaceBetween>
-        <SpaceBetween>
+      </ContentTitleWrap>
+      <SpaceBetweenMo>
+        <FlexStart>
           <FilterWrap>
             <FilterButton
               name="processingMethod"
@@ -211,9 +215,13 @@ const Container: React.FC = () => {
             )}
           </FilterWrap>
           {(methodLength !== 0 || materialLength !== 0) && (
-            <button onClick={resetFilter}>필터초기화</button>
+            <ResetButton onClick={resetFilter}>
+              {' '}
+              <img src={reset} alt="reset" />
+              필터링 리셋
+            </ResetButton>
           )}
-        </SpaceBetween>
+        </FlexStart>
         <CheckBoxWrapper>
           <CheckBox
             type="checkbox"
@@ -224,7 +232,7 @@ const Container: React.FC = () => {
           <CheckBoxLabel htmlFor="status" />
           <span>상담 중인 요청만 보기</span>
         </CheckBoxWrapper>
-      </SpaceBetween>
+      </SpaceBetweenMo>
       <CardContain>
         {filteredOrders.length === 0 ? (
           <div>조건에 맞는 견적 요청이 없습니다.</div>
