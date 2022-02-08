@@ -50,6 +50,10 @@ const Container: React.FC = () => {
       setProcessingMethodChecked(updatedChecked);
     }
   };
+  const resetFilter = () => {
+    setMaterialChecked(new Array(MATERIAL.length).fill(false));
+    setProcessingMethodChecked(new Array(PROCESSING_METHOD.length).fill(false));
+  };
 
   function makeCondition(checkedArray: boolean[], options: string[]): string[] {
     let result: string[] = [];
@@ -124,6 +128,9 @@ const Container: React.FC = () => {
     GetApi();
   }, []);
 
+  const materialLength: number = materialChecked.filter(Boolean).length;
+  const methodLength: number = processingMethodChecked.filter(Boolean).length;
+
   return (
     <div>
       <div>
@@ -134,6 +141,7 @@ const Container: React.FC = () => {
         <div>
           <button name="material" onClick={onClick}>
             재료
+            {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
           </button>
           {isMaterialActive && (
             <ul>
@@ -155,6 +163,7 @@ const Container: React.FC = () => {
         <div>
           <button name="processingMethod" onClick={onClick}>
             가공방식
+            {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
           </button>
           {isProcessingActive && (
             <ul>
@@ -173,6 +182,9 @@ const Container: React.FC = () => {
             </ul>
           )}
         </div>
+        {(methodLength !== 0 || materialLength !== 0) && (
+          <button onClick={resetFilter}>필터초기화</button>
+        )}
       </div>
       <div>
         <input type="checkbox" checked={toggle} onChange={onHandleToggle} />
