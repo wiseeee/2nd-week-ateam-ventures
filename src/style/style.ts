@@ -215,7 +215,7 @@ export const FilterListWrap = styled.ul`
   list-style: none;
   position: absolute;
   z-index: 4;
-  top: 30px;
+  top: 36px;
   left: 0px;
   width: fit-content;
   background: #ffffff;
@@ -253,7 +253,7 @@ export const CardContain = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   gap: 16px;
-  margin-top: 32px;
+  margin: 32px 0 60px 0;
 
   @media ${(props) => props.theme.mobile} {
     flex-direction: row;
