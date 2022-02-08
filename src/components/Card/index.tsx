@@ -33,11 +33,11 @@ const Card: React.FC<Props> = ({ cardData }) => {
       </p>
       <p>
         가공방식
-        <span>{cardData.count}</span>
+        <span> {cardData.method.join(', ')}</span>
       </p>
       <p>
         재료
-        <span>{cardData.count}</span>
+        <span> {Object.values(cardData.material).join(', ')}</span>
       </p>
       <div>
         <button>요청내역보기</button>
