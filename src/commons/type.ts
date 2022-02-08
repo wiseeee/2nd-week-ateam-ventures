@@ -1,7 +1,7 @@
-import { Material } from './common';
-import { Status } from './common';
+import { Material, Method, Status } from './common';
 
 export type MaterialType = keyof typeof Material;
+export type MethodType = keyof typeof Method;
 
 export interface OrderInfo {
   id: number;
@@ -9,7 +9,7 @@ export interface OrderInfo {
   client: string;
   due: string;
   amount: number;
-  method: ('밀링' | '선반')[];
+  method: MethodType[];
   status: Status;
   material: MaterialType[];
   count?: number;

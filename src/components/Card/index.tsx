@@ -25,19 +25,29 @@ const Card: React.FC<Props> = ({ cardData }) => {
       <hr />
       <p>
         도면개수
-        <span>{cardData.count}</span>
+        <span>{cardData.count}개</span>
       </p>
       <p>
         총수량
-        <span>{cardData.count}</span>
+        <span>{cardData.amount}개</span>
       </p>
       <p>
         가공방식
-        <span>{cardData.count}</span>
+        {cardData.method.map((elem, index) => {
+          if (index === cardData.method.length - 1) {
+            return <span>{elem}</span>;
+          }
+          return <span>{elem}, </span>;
+        })}
       </p>
       <p>
         재료
-        <span>{cardData.count}</span>
+        {cardData.material.map((elem, index) => {
+          if (index === cardData.material.length - 1) {
+            return <span>{elem}</span>;
+          }
+          return <span>{elem}, </span>;
+        })}
       </p>
       <div>
         <button>요청내역보기</button>
