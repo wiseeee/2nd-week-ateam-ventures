@@ -1,4 +1,4 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
 import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
@@ -86,7 +86,7 @@ const Container: React.FC = () => {
       });
     }
     setFilteredOrders(tempFilterdOrders2);
-  }, [materialChecked, processingMethodChecked]);
+  }, [materialChecked, processingMethodChecked, orders]);
 
   console.log(filteredOrders);
   useEffect(() => {
