@@ -275,7 +275,7 @@ export const CheckBoxLabel = styled.label`
   left: 0;
   width: 34px;
   height: 14px;
-  border-radius: 15px;
+  border-radius: 7px;
   background: #bebebe;
   cursor: pointer;
   &::after {
@@ -294,16 +294,15 @@ export const CheckBox = styled.input`
   opacity: 0;
   z-index: 3;
   border-radius: 15px;
-  width: 42px;
+  width: 41px;
   height: 24px;
   &:checked + ${CheckBoxLabel} {
     background: #bbdefb;
     &::after {
-      content: '';
       display: block;
       border-radius: 50%;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       margin-left: 21px;
       transition: 0.2s;
       background: #2196f3;
@@ -316,8 +315,10 @@ export const ResetButton = styled.button`
   border: 0px;
   color: #2196f3;
   font-size: 12px;
+  display: inline-flex;
+  align-items: center;
   img {
-    width: 13px;
+    width: 16px;
     padding-right: 12px;
   }
 `;
@@ -332,7 +333,7 @@ export const CardWrap = styled.div`
   cursor: pointer;
   &: hover {
     background-color: #ffffff;
-    border: 2px solid #2196f3;
+    box-shadow: 0 0 0 2px #2196f3 inset;
     border-radius: 4px;
   }
 `;
