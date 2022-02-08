@@ -12,6 +12,12 @@ export interface OrderInfo {
   method: MethodType[];
   status: Status;
   material: MaterialType[];
-  count?: number;
-  docs?: number;
+  count: number;
 }
+
+export interface FilterCondition {
+  method: MethodType[];
+  material: MaterialType[];
+}
+
+export type Category = 'method' | 'material';

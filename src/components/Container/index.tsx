@@ -1,21 +1,27 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { OrderInfo } from '../../commons/type';
+import { OrderInfo, Category } from '../../commons/type';
 import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
+import { MATERIAL, PROCESSING_METHOD, Status } from '../../commons/common';
 import Card from '../Card';
 import './style.css';
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<OrderInfo[]>([]);
-  const [materialChecked, setMaterialChecked] = useState(
+  const [materialChecked, setMaterialChecked] = useState<boolean[]>(
     new Array(MATERIAL.length).fill(false),
   );
-  const [processingMethodChecked, setProcessingMethodChecked] = useState(
-    new Array(PROCESSING_METHOD.length).fill(false),
-  );
+  const [processingMethodChecked, setProcessingMethodChecked] = useState<
+    boolean[]
+  >(new Array(PROCESSING_METHOD.length).fill(false));
   const [isMaterialActive, setIsMaterialActive] = useState(false);
   const [isProcessingActive, setIsProcessingActive] = useState(false);
+  const [toggle, setToggle] = useState(false);
+
+  const onHandleToggle = () => {
+    setToggle(!toggle);
+  };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget.name;
@@ -45,50 +51,70 @@ const Container: React.FC = () => {
     }
   };
 
+  function makeCondition(checkedArray: boolean[], options: string[]): string[] {
+    let result: string[] = [];
+    checkedArray.forEach((checked: boolean, index: number) => {
+      if (checked) {
+        result.push(options[index]);
+      }
+    });
+    return result;
+  }
+
+  function orderFilter(
+    FilterCondition: { material: string[]; method: string[] },
+    category: Category,
+    beforeFilter: OrderInfo[],
+  ) {
+    const optional: string[] = FilterCondition[category];
+    let afterFilter: OrderInfo[] = [];
+    if (optional.length === 0) {
+      afterFilter = beforeFilter;
+    } else {
+      beforeFilter.forEach((order: OrderInfo) => {
+        const found = order[category].some((r) => optional.includes(r));
+        if (found) {
+          afterFilter.push(order);
+        }
+      });
+    }
+    return afterFilter;
+  }
+
   useEffect(() => {
-    let materialCondition: string[] = [];
-    let methodCondition: string[] = [];
-    let tempFilterdOrders1: OrderInfo[] = [];
-    let tempFilterdOrders2: OrderInfo[] = [];
+    let filterCondition: { material: string[]; method: string[] } = {
+      method: makeCondition(processingMethodChecked, PROCESSING_METHOD),
+      material: makeCondition(materialChecked, MATERIAL),
+    };
 
-    materialChecked.forEach((material: boolean, index: number) => {
-      if (material) {
-        materialCondition.push(MATERIAL[index]);
-      }
-    });
-    if (materialCondition.length === 0) {
-      tempFilterdOrders1 = orders;
-    } else {
-      orders.forEach((order: OrderInfo, index: number) => {
-        const material = order.material;
-        const found = material.some((r) => materialCondition.includes(r));
-        if (found) {
-          tempFilterdOrders1.push(order);
+    const methodFiltered: OrderInfo[] = orderFilter(
+      filterCondition,
+      'method',
+      orders,
+    );
+
+    const materialFiltered: OrderInfo[] = orderFilter(
+      filterCondition,
+      'material',
+      methodFiltered,
+    );
+
+    let statusFiltered: OrderInfo[] = [];
+
+    if (toggle) {
+      materialFiltered.forEach((order: OrderInfo) => {
+        const status = order.status;
+        if (status === Status.상담중) {
+          statusFiltered.push(order);
         }
       });
-    }
-
-    processingMethodChecked.forEach((material: boolean, index: number) => {
-      if (material) {
-        methodCondition.push(PROCESSING_METHOD[index]);
-      }
-    });
-    if (methodCondition.length === 0) {
-      tempFilterdOrders2 = tempFilterdOrders1;
     } else {
-      console.log(tempFilterdOrders1);
-      tempFilterdOrders1.forEach((order: OrderInfo, index: number) => {
-        const method = order.method;
-        const found = method.some((r) => methodCondition.includes(r));
-        if (found) {
-          tempFilterdOrders2.push(order);
-        }
-      });
+      statusFiltered = materialFiltered;
     }
-    setFilteredOrders(tempFilterdOrders2);
-  }, [materialChecked, processingMethodChecked, orders]);
 
-  console.log(filteredOrders);
+    setFilteredOrders(statusFiltered);
+  }, [materialChecked, processingMethodChecked, toggle]);
+
   useEffect(() => {
     async function GetApi() {
       const data = await getApi('https://sixted-mock-server.herokuapp.com/');
@@ -149,7 +175,7 @@ const Container: React.FC = () => {
         </div>
       </div>
       <div>
-        <span>토글</span>
+        <input type="checkbox" checked={toggle} onChange={onHandleToggle} />
         <span>상담 중인 요청만 보기</span>
       </div>
       <div className="container">
