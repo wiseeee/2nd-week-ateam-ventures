@@ -111,7 +111,7 @@ const Container: React.FC = () => {
     } else {
       statusFiltered = materialFiltered;
     }
-    
+
     setFilteredOrders(statusFiltered);
   }, [materialChecked, processingMethodChecked, toggle]);
 

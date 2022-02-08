@@ -3,8 +3,6 @@ import { Material, Method, Status } from './common';
 export type MaterialType = keyof typeof Material;
 export type MethodType = keyof typeof Method;
 
-export type MethodType = keyof typeof ProcessingMethod;
-
 export interface OrderInfo {
   id: number;
   title: string;
