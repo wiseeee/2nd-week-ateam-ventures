@@ -25,3 +25,8 @@ export enum Method {
   밀링 = '밀링',
   선반 = '선반',
 }
+
+export enum CategoryName {
+  재료 = 'material',
+  가공방식 = 'method',
+}

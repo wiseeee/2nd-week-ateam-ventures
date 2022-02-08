@@ -1,23 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { OrderInfo, Category } from '../../commons/type';
-import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD, Status } from '../../commons/common';
+import { OrderInfo } from '../../commons/type';
+import getApi, { makeCondition, orderFilter } from '../../commons/utils';
+import {
+  MATERIAL,
+  PROCESSING_METHOD,
+  Status,
+  CategoryName,
+} from '../../commons/common';
 import Card from '../Card';
 import './style.css';
+
+const URL = 'https://sixted-mock-server.herokuapp.com/';
+const makeFalseArr = (target: string[]) => new Array(target.length).fill(false);
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<OrderInfo[]>([]);
   const [materialChecked, setMaterialChecked] = useState<boolean[]>(
-    new Array(MATERIAL.length).fill(false),
+    makeFalseArr(MATERIAL),
   );
   const [processingMethodChecked, setProcessingMethodChecked] = useState<
     boolean[]
-  >(new Array(PROCESSING_METHOD.length).fill(false));
+  >(makeFalseArr(PROCESSING_METHOD));
   const [isMaterialActive, setIsMaterialActive] = useState(false);
   const [isProcessingActive, setIsProcessingActive] = useState(false);
   const [toggle, setToggle] = useState(false);
+
+  const materialLength: number = materialChecked.filter(Boolean).length;
+  const methodLength: number = processingMethodChecked.filter(Boolean).length;
+
+  const resetFilter = () => {
+    setMaterialChecked(makeFalseArr(MATERIAL));
+    setProcessingMethodChecked(makeFalseArr(PROCESSING_METHOD));
+  };
 
   const onHandleToggle = () => {
     setToggle(!toggle);
@@ -25,7 +41,7 @@ const Container: React.FC = () => {
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget.name;
-    if (target === 'material') {
+    if (target === CategoryName.재료) {
       setIsMaterialActive(!isMaterialActive);
     } else {
       setIsProcessingActive(!isProcessingActive);
@@ -50,40 +66,6 @@ const Container: React.FC = () => {
       setProcessingMethodChecked(updatedChecked);
     }
   };
-  const resetFilter = () => {
-    setMaterialChecked(new Array(MATERIAL.length).fill(false));
-    setProcessingMethodChecked(new Array(PROCESSING_METHOD.length).fill(false));
-  };
-
-  function makeCondition(checkedArray: boolean[], options: string[]): string[] {
-    let result: string[] = [];
-    checkedArray.forEach((checked: boolean, index: number) => {
-      if (checked) {
-        result.push(options[index]);
-      }
-    });
-    return result;
-  }
-
-  function orderFilter(
-    FilterCondition: { material: string[]; method: string[] },
-    category: Category,
-    beforeFilter: OrderInfo[],
-  ) {
-    const optional: string[] = FilterCondition[category];
-    let afterFilter: OrderInfo[] = [];
-    if (optional.length === 0) {
-      afterFilter = beforeFilter;
-    } else {
-      beforeFilter.forEach((order: OrderInfo) => {
-        const found = order[category].some((r) => optional.includes(r));
-        if (found) {
-          afterFilter.push(order);
-        }
-      });
-    }
-    return afterFilter;
-  }
 
   useEffect(() => {
     let filterCondition: { material: string[]; method: string[] } = {
@@ -93,13 +75,13 @@ const Container: React.FC = () => {
 
     const methodFiltered: OrderInfo[] = orderFilter(
       filterCondition,
-      'method',
+      CategoryName.가공방식,
       orders,
     );
 
     const materialFiltered: OrderInfo[] = orderFilter(
       filterCondition,
-      'material',
+      CategoryName.재료,
       methodFiltered,
     );
 
@@ -108,6 +90,7 @@ const Container: React.FC = () => {
     if (toggle) {
       materialFiltered.forEach((order: OrderInfo) => {
         const status = order.status;
+
         if (status === Status.상담중) {
           statusFiltered.push(order);
         }
@@ -121,15 +104,12 @@ const Container: React.FC = () => {
 
   useEffect(() => {
     async function GetApi() {
-      const data = await getApi('https://sixted-mock-server.herokuapp.com/');
+      const data = await getApi(URL);
       setOrders(data);
       setFilteredOrders(data);
     }
     GetApi();
   }, []);
-
-  const materialLength: number = materialChecked.filter(Boolean).length;
-  const methodLength: number = processingMethodChecked.filter(Boolean).length;
 
   return (
     <div>
