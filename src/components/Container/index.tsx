@@ -1,21 +1,18 @@
-import React, { useState, useEffect, MouseEventHandler } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { OrderInfo } from '../../commons/type';
 import getApi from '../../commons/utils';
-import { MATERIAL, PROCESSING_METHOD, Material } from '../../commons/common';
+import { MATERIAL, PROCESSING_METHOD } from '../../commons/common';
 import Card from '../Card';
 import './style.css';
+import Checkbox from './elements/Checkbox';
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
   const [filteredOrders, setFilteredOrders] = useState<OrderInfo[]>([]);
-  const [materialChecked, setMaterialChecked] = useState(
-    new Array(MATERIAL.length).fill(false),
-  );
-  const [processingMethodChecked, setProcessingMethodChecked] = useState(
-    new Array(PROCESSING_METHOD.length).fill(false),
-  );
   const [isMaterialActive, setIsMaterialActive] = useState(false);
   const [isProcessingActive, setIsProcessingActive] = useState(false);
+  const [checkedItems, setCheckedItems] = useState(new Set());
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const target = e.currentTarget.name;
@@ -26,47 +23,46 @@ const Container: React.FC = () => {
     }
   };
 
-  const handleOnChange = (
-    position: number,
-    e: React.ChangeEvent<HTMLInputElement>,
-  ): void => {
-    const target = e.target.name;
-
-    if (MATERIAL.includes(target)) {
-      const updatedChecked = materialChecked.map((item, index) =>
-        index === position ? !item : item,
+  const checkedItemHandler = (name: string, isChecked: boolean) => {
+    // Notion > 참고링크 > 5.a 참고
+    if (isChecked) {
+      setCheckedItems((prev) => new Set(prev.add(name)));
+    } else if (!isChecked && checkedItems.has(name)) {
+      setCheckedItems(
+        (prev) => new Set(Array.from(prev).filter((ele) => ele !== name)),
       );
-      console.log(updatedChecked);
-      setMaterialChecked(updatedChecked);
-    } else {
-      const updatedChecked = processingMethodChecked.map((item, index) =>
-        index === position ? !item : item,
-      );
-
-      console.log(updatedChecked);
-      setProcessingMethodChecked(updatedChecked);
     }
   };
 
   useEffect(() => {
-    orders.forEach((order, index) => {
-      const arr = Object.keys(order.material);
-      arr.forEach((mat) => {
-        console.log(mat);
+    if (checkedItems.size) {
+      const updatedOrders = filteredOrders.filter((order) => {
+        // '재료','가공방식' 조건을 합침 => 한번에 필터링 검사 하기 위함
+        const combinedArr = [
+          ...Object.values(order.material),
+          ...Object.values(order.method),
+        ];
+
+        // 주문의 '재료','가공방식'는 반드시 '체크된 항목'을 포함해야 한다
+        return Array.from(checkedItems).every((ele: any) =>
+          combinedArr.includes(ele),
+        );
       });
-    });
-  }, [materialChecked, processingMethodChecked]);
+      setFilteredOrders(updatedOrders);
+    } else {
+      // 체크한 것이 없으면 원상복구
+      setFilteredOrders(orders);
+    }
+  }, [checkedItems]);
 
   useEffect(() => {
     async function GetApi() {
       const data = await getApi('https://sixted-mock-server.herokuapp.com/');
       setOrders(data);
       setFilteredOrders(data);
-      console.log(materialChecked, processingMethodChecked);
     }
     GetApi();
   }, []);
-  // console.log(state, filteredState, filterCondition);
 
   return (
     <div>
@@ -83,13 +79,11 @@ const Container: React.FC = () => {
             <ul>
               {MATERIAL.map((material, index) => (
                 <li key={index}>
-                  <input
-                    type="checkbox"
+                  {/* Notion > 참고링크 > 5. 참고 */}
+                  <Checkbox
                     name={material}
-                    value={material}
-                    checked={materialChecked[index]}
-                    onChange={(e) => handleOnChange(index, e)}
-                  ></input>
+                    checkedItemHandler={checkedItemHandler}
+                  />
                   {material}
                 </li>
               ))}
@@ -104,13 +98,10 @@ const Container: React.FC = () => {
             <ul>
               {PROCESSING_METHOD.map((method, index) => (
                 <li key={index}>
-                  <input
-                    type="checkbox"
+                  <Checkbox
                     name={method}
-                    value={method}
-                    checked={processingMethodChecked[index]}
-                    onChange={(e) => handleOnChange(index, e)}
-                  ></input>
+                    checkedItemHandler={checkedItemHandler}
+                  />
                   {method}
                 </li>
               ))}

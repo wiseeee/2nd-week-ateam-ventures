@@ -21,15 +21,15 @@ const Card: React.FC<Props> = ({ cardData }) => {
         </span>
       </div>
       <p>{cardData.client}</p>
-      <p>{cardData.due}</p>
+      <p>{cardData.due}까지 납기</p>
       <hr />
       <p>
         도면개수
-        <span>{cardData.count}</span>
+        <span> {cardData.count}개</span>
       </p>
       <p>
         총수량
-        <span>{cardData.count}</span>
+        <span> {cardData.count}개</span>
       </p>
       <p>
         가공방식
