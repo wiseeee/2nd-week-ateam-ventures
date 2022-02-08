@@ -34,19 +34,21 @@ const Card: React.FC<Props> = ({ cardData }) => {
       <p>
         가공방식
         {cardData.method.map((elem, index) => {
-          if (index === cardData.method.length - 1) {
-            return <span>{elem}</span>;
-          }
-          return <span>{elem}, </span>;
+          const newElem =
+            index === cardData.method.length - 1
+              ? String(elem)
+              : String(elem) + ', ';
+          return <span key={index}>{newElem}</span>;
         })}
       </p>
       <p>
         재료
         {cardData.material.map((elem, index) => {
-          if (index === cardData.material.length - 1) {
-            return <span>{elem}</span>;
-          }
-          return <span>{elem}, </span>;
+          const newElem =
+            index === cardData.material.length - 1
+              ? String(elem)
+              : String(elem) + ', ';
+          return <span key={index}>{newElem}</span>;
         })}
       </p>
       <div>
