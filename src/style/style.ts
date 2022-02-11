@@ -179,6 +179,14 @@ export const ContentTitleWrap = styled.div`
 `;
 export const FilterWrap = styled.div`
   position: relative;
+  ul {
+    display: none;
+  }
+  &:hover {
+    ul {
+      display: block;
+    }
+  }
 `;
 export const FilterButton = styled.button`
   border: 1px solid #939fa5;

@@ -58,24 +58,6 @@ const Container: React.FC = () => {
     setToggle(!toggle);
   };
 
-  const onMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const target = e.currentTarget.name;
-    if (target === CategoryName.재료) {
-      setIsMaterialActive(true);
-    } else {
-      setIsProcessingActive(true);
-    }
-  };
-
-  const onMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const target = e.currentTarget.slot;
-    if (target === CategoryName.재료) {
-      setIsMaterialActive(false);
-    } else {
-      setIsProcessingActive(false);
-    }
-  };
-
   const handleOnChange = (
     position: number,
     e: React.ChangeEvent<HTMLInputElement>,
@@ -147,68 +129,53 @@ const Container: React.FC = () => {
       </ContentTitleWrap>
       <SpaceBetweenMo>
         <FlexStart>
-          <FilterWrap
-            className="processingMethod"
-            slot="processingMethod"
-            onMouseLeave={onMouseLeave}
-          >
-            <FilterButton
-              name="processingMethod"
-              onMouseEnter={onMouseEnter}
-              click={methodLength !== 0}
-            >
+          <FilterWrap className="processingMethod">
+            <FilterButton name="processingMethod" click={methodLength !== 0}>
               가공방식
               {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
             </FilterButton>
             <div style={{ height: '4px' }} />
-            {isProcessingActive && (
-              <FilterListWrap>
-                {PROCESSING_METHOD.map((method, index) => (
-                  <FilterList key={index}>
-                    <Label>
-                      <Check
-                        type="checkbox"
-                        id={method}
-                        name={method}
-                        value={method}
-                        checked={processingMethodChecked[index]}
-                        onChange={(e) => handleOnChange(index, e)}
-                      />
-                      <FilterSpan>{method}</FilterSpan>
-                    </Label>
-                  </FilterList>
-                ))}
-              </FilterListWrap>
-            )}
+            <FilterListWrap>
+              {PROCESSING_METHOD.map((method, index) => (
+                <FilterList key={index}>
+                  <Label>
+                    <Check
+                      type="checkbox"
+                      id={method}
+                      name={method}
+                      value={method}
+                      checked={processingMethodChecked[index]}
+                      onChange={(e) => handleOnChange(index, e)}
+                    />
+                    <FilterSpan>{method}</FilterSpan>
+                  </Label>
+                </FilterList>
+              ))}
+            </FilterListWrap>
           </FilterWrap>
-          <FilterWrap slot="material" onMouseLeave={onMouseLeave}>
-            <FilterButton
-              name="material"
-              onMouseEnter={onMouseEnter}
-              click={materialLength !== 0}
-            >
+          <FilterWrap>
+            <FilterButton name="material" click={materialLength !== 0}>
               재료
               {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
             </FilterButton>
-            {isMaterialActive && (
-              <FilterListWrap>
-                {MATERIAL.map((material, index) => (
-                  <FilterList key={index}>
-                    <Label>
-                      <Check
-                        type="checkbox"
-                        id={material}
-                        name={material}
-                        value={material}
-                        checked={materialChecked[index]}
-                        onChange={(e) => handleOnChange(index, e)}
-                      />
-                      <FilterSpan>{material}</FilterSpan>
-                    </Label>
-                  </FilterList>
-                ))}
-              </FilterListWrap>
-            )}
+            <div style={{ height: '4px' }} />
+            <FilterListWrap>
+              {MATERIAL.map((material, index) => (
+                <FilterList key={index}>
+                  <Label>
+                    <Check
+                      type="checkbox"
+                      id={material}
+                      name={material}
+                      value={material}
+                      checked={materialChecked[index]}
+                      onChange={(e) => handleOnChange(index, e)}
+                    />
+                    <FilterSpan>{material}</FilterSpan>
+                  </Label>
+                </FilterList>
+              ))}
+            </FilterListWrap>
           </FilterWrap>
           {(methodLength !== 0 || materialLength !== 0) && (
             <ResetButton onClick={resetFilter}>
