@@ -35,7 +35,9 @@ const makeFalseArr = (target: string[]) => new Array(target.length).fill(false);
 
 const Container: React.FC = () => {
   const [orders, setOrders] = useState<OrderInfo[]>([]);
-  const [filteredOrders, setFilteredOrders] = useState<OrderInfo[]>([]);
+  const [filteredOrders, setFilteredOrders] = useState<OrderInfo[] | null>(
+    null,
+  );
   const [materialChecked, setMaterialChecked] = useState<boolean[]>(
     makeFalseArr(MATERIAL),
   );
@@ -229,7 +231,9 @@ const Container: React.FC = () => {
         </CheckBoxWrapper>
       </SpaceBetweenMo>
       <CardContain>
-        {filteredOrders.length === 0 ? (
+        {filteredOrders === null ? (
+          <NoDataWrap>데이터를 불러오는 중입니다.</NoDataWrap>
+        ) : filteredOrders.length === 0 ? (
           <NoDataWrap>조건에 맞는 견적 요청이 없습니다.</NoDataWrap>
         ) : (
           filteredOrders.map((e, index) => <Card key={index} cardData={e} />)
