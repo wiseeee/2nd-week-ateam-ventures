@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import logo from './img/logo.png';
 import user from './img/user_Vector.png';
 import logoBlue from './img/logo_blue.png';
-import {
-  HeaderWrap,
-  LogoWrap,
-  UserWrap,
-  Menu,
-  UserBackground,
-  MoLogoWrap,
-} from '../../style/style';
+import * as S from '../../style/style';
 
 const Header: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,24 +12,24 @@ const Header: React.FC = () => {
   };
 
   return (
-    <HeaderWrap>
-      <LogoWrap>
+    <S.HeaderWrap>
+      <S.LogoWrap>
         <button onClick={showMenu}>
-          <Menu>
+          <S.Menu>
             <span></span>
             <span></span>
             <span></span>
-          </Menu>
+          </S.Menu>
         </button>
         <button>
           <img src={logo} alt="logo" />
         </button>
-      </LogoWrap>
-      <UserBackground onClick={showMenu} click={menuOpen}></UserBackground>
-      <UserWrap click={menuOpen}>
-        <MoLogoWrap>
+      </S.LogoWrap>
+      <S.UserBackground onClick={showMenu} click={menuOpen}></S.UserBackground>
+      <S.UserWrap click={menuOpen}>
+        <S.MoLogoWrap>
           <img src={logoBlue} alt="logo_color" />
-        </MoLogoWrap>
+        </S.MoLogoWrap>
         <li>
           <button>
             <img src={user} alt="user_img" />
@@ -46,8 +39,8 @@ const Header: React.FC = () => {
         <li>
           <button>로그아웃</button>
         </li>
-      </UserWrap>
-    </HeaderWrap>
+      </S.UserWrap>
+    </S.HeaderWrap>
   );
 };
 

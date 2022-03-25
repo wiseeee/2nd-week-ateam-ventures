@@ -10,25 +10,7 @@ import {
 } from '../../commons/common';
 import Card from '../Card';
 import reset from './img/reset.png';
-import {
-  Wrapper,
-  CardContain,
-  CheckBox,
-  CheckBoxLabel,
-  CheckBoxWrapper,
-  FlexStart,
-  SpaceBetweenMo,
-  FilterButton,
-  FilterList,
-  FilterListWrap,
-  FilterWrap,
-  ResetButton,
-  ContentTitleWrap,
-  NoDataWrap,
-  Label,
-  Check,
-  FilterSpan,
-} from '../../style/style';
+import * as S from '../../style/style';
 
 const URL = 'https://sixted-mock-server.herokuapp.com/';
 const makeFalseArr = (target: string[]) => new Array(target.length).fill(false);
@@ -142,33 +124,33 @@ const Container: React.FC = () => {
   }, []);
 
   return (
-    <Wrapper>
-      <ContentTitleWrap>
+    <S.Wrapper>
+      <S.ContentTitleWrap>
         <h2>들어온 요청</h2>
         <span>파트너님에게 딱 맞는 요청서를 찾아보세요.</span>
-      </ContentTitleWrap>
-      <SpaceBetweenMo>
-        <FlexStart>
-          <FilterWrap
+      </S.ContentTitleWrap>
+      <S.SpaceBetweenMo>
+        <S.FlexStart>
+          <S.FilterWrap
             className="processingMethod"
             slot="processingMethod"
             onMouseLeave={onMouseLeave}
           >
-            <FilterButton
+            <S.FilterButton
               name="processingMethod"
               onMouseEnter={onMouseEnter}
               click={methodLength !== 0}
             >
               가공방식
               {methodLength !== 0 && <span>{`(${methodLength})`}</span>}
-            </FilterButton>
+            </S.FilterButton>
             <div style={{ height: '4px' }} />
             {isProcessingActive && (
-              <FilterListWrap>
+              <S.FilterListWrap>
                 {PROCESSING_METHOD.map((method, index) => (
-                  <FilterList key={index}>
-                    <Label>
-                      <Check
+                  <S.FilterList key={index}>
+                    <S.Label>
+                      <S.Check
                         type="checkbox"
                         id={method}
                         name={method}
@@ -176,28 +158,28 @@ const Container: React.FC = () => {
                         checked={processingMethodChecked[index]}
                         onChange={(e) => handleOnChange(index, e)}
                       />
-                      <FilterSpan>{method}</FilterSpan>
-                    </Label>
-                  </FilterList>
+                      <S.FilterSpan>{method}</S.FilterSpan>
+                    </S.Label>
+                  </S.FilterList>
                 ))}
-              </FilterListWrap>
+              </S.FilterListWrap>
             )}
-          </FilterWrap>
-          <FilterWrap slot="material" onMouseLeave={onMouseLeave}>
-            <FilterButton
+          </S.FilterWrap>
+          <S.FilterWrap slot="material" onMouseLeave={onMouseLeave}>
+            <S.FilterButton
               name="material"
               onMouseEnter={onMouseEnter}
               click={materialLength !== 0}
             >
               재료
               {materialLength !== 0 && <span>{`(${materialLength})`}</span>}
-            </FilterButton>
+            </S.FilterButton>
             {isMaterialActive && (
-              <FilterListWrap>
+              <S.FilterListWrap>
                 {MATERIAL.map((material, index) => (
-                  <FilterList key={index}>
-                    <Label>
-                      <Check
+                  <S.FilterList key={index}>
+                    <S.Label>
+                      <S.Check
                         type="checkbox"
                         id={material}
                         name={material}
@@ -205,41 +187,41 @@ const Container: React.FC = () => {
                         checked={materialChecked[index]}
                         onChange={(e) => handleOnChange(index, e)}
                       />
-                      <FilterSpan>{material}</FilterSpan>
-                    </Label>
-                  </FilterList>
+                      <S.FilterSpan>{material}</S.FilterSpan>
+                    </S.Label>
+                  </S.FilterList>
                 ))}
-              </FilterListWrap>
+              </S.FilterListWrap>
             )}
-          </FilterWrap>
+          </S.FilterWrap>
           {(methodLength !== 0 || materialLength !== 0) && (
-            <ResetButton onClick={resetFilter}>
+            <S.ResetButton onClick={resetFilter}>
               <img src={reset} alt="reset" />
               필터링 리셋
-            </ResetButton>
+            </S.ResetButton>
           )}
-        </FlexStart>
-        <CheckBoxWrapper>
-          <CheckBox
+        </S.FlexStart>
+        <S.CheckBoxWrapper>
+          <S.CheckBox
             type="checkbox"
             id="status"
             checked={toggle}
             onChange={onHandleToggle}
           />
-          <CheckBoxLabel htmlFor="status" />
+          <S.CheckBoxLabel htmlFor="status" />
           <span>상담 중인 요청만 보기</span>
-        </CheckBoxWrapper>
-      </SpaceBetweenMo>
-      <CardContain>
+        </S.CheckBoxWrapper>
+      </S.SpaceBetweenMo>
+      <S.CardContain>
         {filteredOrders === null ? (
-          <NoDataWrap>데이터를 불러오는 중입니다.</NoDataWrap>
+          <S.NoDataWrap>데이터를 불러오는 중입니다.</S.NoDataWrap>
         ) : filteredOrders.length === 0 ? (
-          <NoDataWrap>조건에 맞는 견적 요청이 없습니다.</NoDataWrap>
+          <S.NoDataWrap>조건에 맞는 견적 요청이 없습니다.</S.NoDataWrap>
         ) : (
           filteredOrders.map((e, index) => <Card key={index} cardData={e} />)
         )}
-      </CardContain>
-    </Wrapper>
+      </S.CardContain>
+    </S.Wrapper>
   );
 };
 
